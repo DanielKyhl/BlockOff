@@ -12,12 +12,12 @@ public class UnitController {
     @Autowired
     private UnitService unitService;
 
-    @GetMapping("/{value}")
+    @GetMapping("/{value:.+}")
     public Unit report(@PathVariable String value) {
         return unitService.report(value);
     }
 
-    @PostMapping("/{value}")
+    @PostMapping("/{value:.+}")
     public Unit addReport(@PathVariable String value, @RequestParam Long userId) {
         return unitService.addReport(value, userId);
     }
