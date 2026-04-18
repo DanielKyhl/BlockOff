@@ -52,7 +52,11 @@ body { margin: 0; }
     font-weight: 800;
     letter-spacing: -0.5px;
     color: var(--carbon-black);
+    cursor: pointer;
+    user-select: none;
+    transition: opacity 0.15s;
 }
+.brand:hover { opacity: 0.8; }
 
 .nav-link {
     text-decoration: none;
@@ -60,6 +64,7 @@ body { margin: 0; }
     font-size: 0.9rem;
     font-weight: 600;
     transition: color 0.15s;
+    cursor: pointer;
 }
 .nav-link:hover { color: var(--accent); }
 
@@ -75,69 +80,24 @@ body { margin: 0; }
     white-space: nowrap;
 }
 
-/* ── HERO ────────────────────────────────────────────── */
-.hero-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 80px 48px 64px;
-}
-
-.hero-img {
-    margin-bottom: 28px;
-    filter: drop-shadow(0 8px 24px rgba(235, 94, 40, 0.18));
-}
-
-h1 {
-    font-size: clamp(2.4rem, 5vw, 3.6rem);
-    letter-spacing: -2px;
-    line-height: 1.1;
-    margin: 0 0 20px;
-}
-
-.orange-text { color: var(--accent); }
-
-.tagline {
-    color: var(--charcoal-brown);
-    font-size: 1.1rem;
-    max-width: 520px;
-    margin: 0 0 36px;
-}
-
-.cta-row { display: flex; gap: 14px; justify-content: center; }
-
-.btn {
-    text-decoration: none;
-    padding: 13px 28px;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: all 0.15s;
-    display: inline-block;
-    cursor: pointer;
-}
-
-.btn-primary { background: var(--accent); color: white; border: none; }
-.btn-outline { border: 2px solid var(--dust-grey); color: var(--carbon-black); }
-
-/* ── AUTH / LOGIN ───────────────────────────────────── */
+/* ── AUTH / LOGIN & SIGNUP ──────────────────────────── */
 .auth-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 80px 24px;
+    padding: 60px 24px;
     flex-grow: 1;
 }
 
 .auth-card {
     width: 100%;
-    max-width: 480px;
+    max-width: 500px;
     padding: 48px;
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
     text-align: left;
 }
 
-.auth-title { margin: 0 0 8px; font-size: 1.6rem; letter-spacing: 1px; }
+.auth-title { margin: 0 0 8px; font-size: 1.6rem; letter-spacing: 1px; text-transform: uppercase; }
 
 .auth-subtitle {
     color: var(--dust-grey);
@@ -165,7 +125,7 @@ h1 {
     color: var(--floral-white);
 }
 
-.input-group input {
+.input-group input, .country-select {
     width: 100%;
     background: #151413;
     border: 2px solid var(--charcoal-brown);
@@ -177,12 +137,38 @@ h1 {
     transition: all 0.2s;
 }
 
-.input-group input:focus {
+.input-group input:focus, .country-select:focus {
     outline: none;
     border-color: var(--accent);
 }
 
-.btn-full { width: 100%; margin-top: 12px; padding: 16px; font-weight: 700; }
+/* Phone Input Specifics */
+.phone-input-container {
+    display: flex;
+    gap: 10px;
+}
+
+.country-select {
+    width: 110px;
+    cursor: pointer;
+    padding-right: 5px;
+}
+
+.phone-digits {
+    flex-grow: 1;
+}
+
+.validation-error {
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 8px;
+    text-transform: uppercase;
+}
+
+button:disabled { cursor: not-allowed; opacity: 0.5; filter: grayscale(1); }
+
+.btn-full { width: 100%; margin-top: 12px; padding: 16px; font-weight: 700; font-size: 1.1rem; }
 
 .auth-footer {
     margin-top: 48px !important;
@@ -193,7 +179,39 @@ h1 {
 
 .link-style { font-weight: 800; text-decoration: underline; cursor: pointer; }
 
-/* ── CARDS ───────────────────────────────────────────── */
+/* ── HOME SECTION STYLES ────────────────────────────── */
+.hero-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 80px 48px 64px;
+}
+
+.hero-img {
+    margin-bottom: 28px;
+    filter: drop-shadow(0 8px 24px rgba(235, 94, 40, 0.18));
+}
+
+h1 { font-size: clamp(2.4rem, 5vw, 3.6rem); letter-spacing: -2px; line-height: 1.1; margin: 0 0 20px; }
+.orange-text { color: var(--accent); }
+.tagline { color: var(--charcoal-brown); font-size: 1.1rem; max-width: 520px; margin: 0 0 36px; }
+.cta-row { display: flex; gap: 14px; justify-content: center; }
+
+.btn {
+    text-decoration: none;
+    padding: 13px 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.15s;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn-primary { background: var(--accent); color: white; border: none; }
+.btn-outline { border: 2px solid var(--dust-grey); color: var(--carbon-black); background: transparent; }
+
 .cards-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -208,37 +226,21 @@ h1 {
 .phishing-video { width: 100%; display: block; }
 
 /* ── FOOTER ──────────────────────────────────────────── */
-.site-footer {
-    display: flex;
-    background: var(--bg-footer);
-    color: var(--dust-grey);
-    margin-top: auto;
-}
+.site-footer { display: flex; background: var(--bg-footer); color: var(--dust-grey); margin-top: auto; }
 .footer-col { flex: 1; padding: 48px; }
 .footer-divider { width: 1px; background: rgba(255,255,255,0.08); margin: 32px 0; }
 
-.site-footer ul {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 24px;
+.site-footer ul { list-style: none; padding: 0; margin: 0 0 24px; display: flex; flex-direction: column; gap: 8px; }
+.site-footer a, .site-footer a:visited { color: var(--accent); text-decoration: none; font-size: 0.9rem; font-weight: 600; }
+.site-footer a:hover { opacity: 0.8; text-decoration: underline; }
+
+.contact-area {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
+    padding: 16px;
+    background: rgba(255,252,242,0.04);
+    border-radius: 8px;
+    border-left: 3px solid var(--accent);
 }
-
-/* Updated: Overriding purple visited links with brand orange */
-.site-footer a,
-.site-footer a:visited {
-    color: var(--accent);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 600;
-    transition: opacity 0.15s;
-}
-
-.site-footer a:hover {
-    opacity: 0.8;
-    text-decoration: underline;
-}
-
 .email-display { color: var(--accent) !important; font-weight: 700; text-decoration: none; }
