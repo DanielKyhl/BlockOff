@@ -3,39 +3,50 @@ import heroImg from './assets/hero.png'
 import './index.css'
 
 function App() {
-    // Starting the count at zero as requested
     const [count, setCount] = useState(0)
 
     return (
-        <>
+        <div className="app-wrapper">
             <section id="center">
-                <div className="hero">
-                    <img src={heroImg} width="170" height="179" alt="Block OFF Logo" />
-                </div>
+                <div className="layout-grid">
+                    {/* Left Spacer to keep center balanced */}
+                    <div className="side-spacer"></div>
 
-                <div>
-                    <h1>Welcome to Block <span className="orange-text">OFF</span></h1>
-                    <p className="tagline">Your protection from Phishing</p>
-                    <p>
-                        Secure your digital life with Block OFF.
-                    </p>
-                </div>
+                    {/* Middle Column */}
+                    <div className="middle-box">
+                        <div className="hero">
+                            <img src={heroImg} width="170" height="179" alt="Block OFF Logo" />
+                        </div>
 
-                {/* The Counter Button */}
-                <button
-                    className="counter"
-                    onClick={() => setCount((count) => count + 1)}
-                >
-                    Scammers Blocked OFF: {count}
-                </button>
+                        <h1>Welcome to Block <span className="orange-text">OFF</span></h1>
+                        <p className="tagline">Your protection from Phishing</p>
+                        <p>Secure your digital life with Block OFF.</p>
 
-                {/* Download Banner */}
-                <div className="banner">
-                    <h3>Check out how to become secure:</h3>
-                    <div className="download-links">
-                        <a href="#" className="download-btn">Download App (Coming Soon)</a>
-                        <a href="#" className="download-btn">Web Extension (In Development)</a>
+                        <button className="counter" onClick={() => setCount((count) => count + 1)}>
+                            Scammers Blocked OFF: {count}
+                        </button>
+
+                        <div className="banner">
+                            <h3>Check out how to become secure:</h3>
+                            <div className="download-links">
+                                <a href="#" className="download-btn">Download App (Soon)</a>
+                                <a href="#" className="download-btn">Web Extension</a>
+                            </div>
+                        </div>
                     </div>
+
+                    {/* Right Column: The Orange Info Box */}
+                    <aside className="side-box orange-bg">
+                        <h3>What is Phishing?</h3>
+                        <p>
+                            Phishing is a cybercrime where scammers pose as legitimate institutions
+                            to lure individuals into providing sensitive data or take your money.
+                        </p>
+                        <hr />
+                        <p className="info-highlight">
+                            <strong>Protect Yourself:</strong> Block OFF identifies scammers and warns you about sketcy links, emails, phones and ect. when they try to contact you.
+                        </p>
+                    </aside>
                 </div>
             </section>
 
@@ -56,9 +67,16 @@ function App() {
                         <li><a href="https://github.com">GitHub</a></li>
                         <li><a href="https://x.com">X / Twitter</a></li>
                     </ul>
+
+                    <div className="contact-area">
+                        <p className="contact-label">Get in contact with the team:</p>
+                        <a href="mailto:BlockOFFService@gmail.com" className="email-display">
+                            BlockOFFService@gmail.com
+                        </a>
+                    </div>
                 </div>
             </section>
-        </>
+        </div>
     )
 }
 
