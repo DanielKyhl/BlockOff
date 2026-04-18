@@ -91,7 +91,7 @@ function App() {
                 </ul>
                 <div className="contact-area">
                     <span className="contact-label">Contact the team: </span>
-                    <a href="mailto:BlockOFFService@gmail.com" className="email-display">BlockOFFService@gmail.com</a>
+                    <a href="mailto:Blockoffservice@gmail.com" className="email-display">Blockoffservice@gmail.com</a>
                 </div>
             </div>
         </footer>
@@ -108,12 +108,32 @@ function App() {
                         <h2 className="auth-title">Welcome back, Hunter</h2>
                         <p className="auth-subtitle">Status: <span className="orange-text">Junior Shield</span></p>
                     </section>
+
                     <div className="profile-grid">
-                        <div className="card card-dark stat-card">
-                            <h3>Scammer Reports</h3>
-                            <div className="stat-number">12</div>
-                            <p>You've helped save countless people this month.</p>
+                        {/* Box 1: Points System */}
+                        <div className="card card-dark stat-card highlight-card">
+                            <h3>Total Score</h3>
+                            <div className="stat-number">1,250</div>
+                            <p className="stat-label">Your points</p>
                         </div>
+
+                        {/* Box 2: Impact Metrics */}
+                        <div className="card card-dark stat-card">
+                            <div className="mini-stats">
+                                <div className="mini-stat-item">
+                                    <span className="mini-stat-value">14</span>
+                                    <span className="mini-stat-desc">Scammers Reported</span>
+                                </div>
+                                <div className="mini-stat-divider"></div>
+                                <div className="mini-stat-item">
+                                    <span className="mini-stat-value">432</span>
+                                    <span className="mini-stat-desc">Users Warned</span>
+                                </div>
+                            </div>
+                            <p className="impact-text">Your reports help keep the community safe.</p>
+                        </div>
+
+                        {/* Box 3: Account Details */}
                         <div className="card card-video account-details">
                             <h3>Account Info</h3>
                             <div className="detail-row"><span>Email:</span> <strong>{userData.email}</strong></div>

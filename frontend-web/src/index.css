@@ -330,3 +330,76 @@ h1 { font-size: clamp(2.4rem, 5vw, 3.6rem); letter-spacing: -2px; line-height: 1
 @media (max-width: 768px) {
     .profile-grid { grid-template-columns: 1fr; }
 }
+
+/* --- Add/Update these in your index.css --- */
+
+.highlight-card {
+    border: 2px solid var(--accent);
+    background: linear-gradient(145deg, var(--carbon-black) 0%, #2a2826 100%);
+}
+
+.stat-label {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    font-weight: 800;
+    color: var(--dust-grey);
+    margin-top: -10px;
+}
+
+/* Mini Stats Layout */
+.mini-stats {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.mini-stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.mini-stat-value {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--accent);
+}
+
+.mini-stat-desc {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--floral-white);
+    text-align: center;
+    max-width: 80px;
+    line-height: 1.2;
+}
+
+.mini-stat-divider {
+    width: 1px;
+    height: 50px;
+    background: var(--charcoal-brown);
+}
+
+.impact-text {
+    font-size: 0.85rem;
+    color: var(--dust-grey);
+    font-style: italic;
+    border-top: 1px solid var(--charcoal-brown);
+    padding-top: 15px;
+    margin-top: 10px;
+}
+
+/* Responsive adjustment for the 3-box profile grid */
+@media (min-width: 900px) {
+    .profile-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .account-details {
+        grid-column: span 2; /* Account details stretch across the bottom */
+    }
+}
+
