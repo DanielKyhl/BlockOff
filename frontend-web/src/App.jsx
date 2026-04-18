@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import heroImg from './assets/hero.png'
+import phishingVid from './assets/Phising.mp4' // Using your filename
 import './index.css'
 
 function App() {
@@ -9,10 +10,8 @@ function App() {
         <div className="app-wrapper">
             <section id="center">
                 <div className="layout-grid">
-                    {/* Left Spacer to keep center balanced */}
                     <div className="side-spacer"></div>
 
-                    {/* Middle Column */}
                     <div className="middle-box">
                         <div className="hero">
                             <img src={heroImg} width="170" height="179" alt="Block OFF Logo" />
@@ -35,16 +34,29 @@ function App() {
                         </div>
                     </div>
 
-                    {/* Right Column: The Orange Info Box */}
+                    {/* Right Column: The Orange Info Box with your Video */}
                     <aside className="side-box orange-bg">
                         <h3>What is Phishing?</h3>
                         <p>
                             Phishing is a cybercrime where scammers pose as legitimate institutions
                             to lure individuals into providing sensitive data or take your money.
                         </p>
+
+                        {/* --- THE NEW VIDEO ANIMATION --- */}
+                        <div className="video-container">
+                            <video
+                                src={phishingVid}
+                                autoPlay
+                                loop
+                                muted
+                                playsInline
+                                className="phishing-video"
+                            />
+                        </div>
+
                         <hr />
                         <p className="info-highlight">
-                            <strong>Protect Yourself:</strong> Block OFF identifies scammers and warns you about sketcy links, emails, phones and ect. when they try to contact you.
+                            <strong>Protect Yourself:</strong> Block OFF identifies scammers and warns you about sketchy links, emails, phones, and etc. when they try to contact you.
                         </p>
                     </aside>
                 </div>
