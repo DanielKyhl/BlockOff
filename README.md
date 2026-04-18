@@ -6,3 +6,5 @@ CSS color codes:
 --charcoal-brown: #403d39ff;
 --carbon-black: #252422ff;
 --spicy-paprika: #eb5e28ff;
+
+Logo files: https://fileport.io/LguU66QyEc5P
