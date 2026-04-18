@@ -34,60 +34,67 @@ body { margin: 0; }
 
 .layout-grid {
     display: grid;
-    grid-template-columns: 280px 1fr 340px;
+    /* Reduced left column (180px) and wider middle/right pulls the center left */
+    grid-template-columns: 180px 1fr 340px;
     gap: 30px;
-    align-items: center;
+    align-items: start;
 }
 
-.middle-box { text-align: center; }
+.side-column-left {
+    display: flex;
+    justify-content: flex-start;
+    /* This moves the button DOWN from the top */
+    padding-top: 60px;
+}
 
-/* ORANGE INFO BOX */
+.middle-box {
+    text-align: center;
+    padding-top: 20px;
+}
+
+/* THE BUTTON (Moved down via padding-top above) */
+.counter {
+    font-family: var(--mono);
+    background: var(--carbon-black);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+/* ORANGE INFO BOX - Dimmed Color */
 .side-box.orange-bg {
-    background-color: var(--spicy-paprika);
+    background-color: color-mix(in srgb, var(--spicy-paprika), black 15%);
     color: white;
     padding: 24px;
     border-radius: 16px;
     text-align: left;
-    box-shadow: 0 10px 20px rgba(235, 94, 40, 0.2);
-    display: flex;
-    flex-direction: column;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .orange-bg h3 { color: var(--carbon-black); margin-top: 0; text-transform: uppercase; }
 .orange-bg hr { border: 0; border-top: 1px solid rgba(255,252,242,0.3); margin: 15px 0; }
 
-/* VIDEO CONTAINER STYLES */
 .video-container {
     width: 100%;
     border-radius: 10px;
-    overflow: hidden; /* Clips video to the rounded corners */
+    overflow: hidden;
     margin: 15px 0;
     border: 1px solid rgba(255, 255, 255, 0.2);
     background: rgba(0, 0, 0, 0.1);
 }
 
-.phishing-video {
-    width: 100%;
-    display: block; /* Removes weird gaps at the bottom */
-}
+.phishing-video { width: 100%; display: block; }
 
 /* UI ELEMENTS */
 h1 { font-size: 48px; letter-spacing: -2px; margin: 20px 0 10px; }
 .orange-text { color: var(--accent); }
 .tagline { color: var(--charcoal-brown); font-size: 1.3rem; }
 
-.counter {
-    font-family: var(--mono);
-    background: var(--carbon-black);
-    color: white;
-    padding: 12px 20px;
-    border-radius: 50px;
-    border: none;
-    cursor: pointer;
-    margin: 15px 0;
-}
-
-.banner { background: white; border: 2px solid var(--accent); border-radius: 12px; padding: 20px; }
+.banner { background: white; border: 2px solid var(--accent); border-radius: 12px; padding: 24px; margin-top: 20px;}
 .download-links { display: flex; gap: 15px; justify-content: center; margin-top: 10px; }
 .download-btn {
     background: var(--accent);

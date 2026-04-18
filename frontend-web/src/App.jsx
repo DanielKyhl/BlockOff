@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import heroImg from './assets/hero.png'
-import phishingVid from './assets/Phising.mp4' // Using your filename
+import phishingVid from './assets/Phising.mp4'
 import './index.css'
 
 function App() {
@@ -10,8 +10,15 @@ function App() {
         <div className="app-wrapper">
             <section id="center">
                 <div className="layout-grid">
-                    <div className="side-spacer"></div>
 
+                    {/* LEFT COLUMN: The Scammer Counter */}
+                    <div className="side-column-left">
+                        <button className="counter" onClick={() => setCount((count) => count + 1)}>
+                            Scammers Blocked OFF: {count}
+                        </button>
+                    </div>
+
+                    {/* MIDDLE COLUMN: Shifted left via grid-template-columns */}
                     <div className="middle-box">
                         <div className="hero">
                             <img src={heroImg} width="170" height="179" alt="Block OFF Logo" />
@@ -20,10 +27,6 @@ function App() {
                         <h1>Welcome to Block <span className="orange-text">OFF</span></h1>
                         <p className="tagline">Your protection from Phishing</p>
                         <p>Secure your digital life with Block OFF.</p>
-
-                        <button className="counter" onClick={() => setCount((count) => count + 1)}>
-                            Scammers Blocked OFF: {count}
-                        </button>
 
                         <div className="banner">
                             <h3>Check out how to become secure:</h3>
@@ -34,7 +37,7 @@ function App() {
                         </div>
                     </div>
 
-                    {/* Right Column: The Orange Info Box with your Video */}
+                    {/* RIGHT COLUMN: Info Box with Video */}
                     <aside className="side-box orange-bg">
                         <h3>What is Phishing?</h3>
                         <p>
@@ -42,7 +45,6 @@ function App() {
                             to lure individuals into providing sensitive data or take your money.
                         </p>
 
-                        {/* --- THE NEW VIDEO ANIMATION --- */}
                         <div className="video-container">
                             <video
                                 src={phishingVid}
@@ -56,7 +58,7 @@ function App() {
 
                         <hr />
                         <p className="info-highlight">
-                            <strong>Protect Yourself:</strong> Block OFF identifies scammers and warns you about sketchy links, emails, phones, and etc. when they try to contact you.
+                            <strong>Protect Yourself:</strong> Block OFF identifies scammers and warns you about sketchy links, emails, and phones.
                         </p>
                     </aside>
                 </div>
