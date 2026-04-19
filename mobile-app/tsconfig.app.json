@@ -17,9 +17,8 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/lib/*": ["./app/lib/*"],
+      "@/*": ["./*"]
     },
     "skipLibCheck": true,
     "strict": false,
@@ -30,6 +29,8 @@
     "useDefineForClassFields": true
   },
   "include": [
-    "src"
+    "app",
+    "components",
+    "hooks"
   ]
 }
