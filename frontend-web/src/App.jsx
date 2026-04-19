@@ -26,9 +26,9 @@ function App() {
     });
 
     // ── API CALLS
-    const createUser = async (email, phoneNumber) => {
+    const createUser = async (email, phoneNumber, password) => {
         const response = await fetch(
-            `http://localhost:8080/users?email=${email}&phoneNumber=${phoneNumber}`,
+            `http://localhost:8080/users?email=${email}&phoneNumber=${phoneNumber}&password=${password}`,
             { method: 'POST' }
         );
         return await response.json();
@@ -53,12 +53,13 @@ function App() {
     const handleSignupSubmit = async (e) => {
         e.preventDefault();
         try {
-            const user = await createUser(signupData.email, signupData.phone);
+            const user = await createUser(signupData.email, signupData.phone, signupData.password);
             setUserData(prev => ({
                 ...prev,
                 id: user.id, // ID from backend
                 email: user.email,
                 phone: user.phoneNumber,
+                password: user.password,
             }));
             setIsLoggedIn(true);
             setView('profile');
