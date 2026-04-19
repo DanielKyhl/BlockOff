@@ -7,10 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
-@CrossOrigin(origins = {
-        "http://localhost:5173",
-        "chrome-extension://lkpnjncioceiadifnbmeaioognfcgboc"
-})
+@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:8080",
+                        "chrome-extension://lkpnjncioceiadifnbmeaioognfcgboc"})
 @RestController
 @RequestMapping("/units")
 public class UnitController {
