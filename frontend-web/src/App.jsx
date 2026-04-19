@@ -6,37 +6,64 @@ import './index.css'
 function App() {
     const [view, setView] = useState('home')
     const [isLoggedIn, setIsLoggedIn] = useState(false)
-    const [reportingType, setReportingType] = useState(null); // 'website', 'phone', or 'email'
+    const [reportingType, setReportingType] = useState(null)
 
-    // Central User State
+    // Central User State - Added 'id' to track database user
     const [userData, setUserData] = useState({
+        id: null,
         email: 'Guest',
         phone: '',
         countryCode: '+45',
         globalBlocked: 0,
-        points: 1250,
-        reported: 14,
-        warned: 432
+        points: 50,
+        reported: 4,
+        warned: 20
     });
 
     const [signupData, setSignupData] = useState({
         email: '', countryCode: '+45', phone: '', pass1: '', pass2: ''
     });
 
+    // ── API UTILITIES ──────────────────────────────────
+    const createUser = async (email, phoneNumber) => {
+        const response = await fetch(
+            `http://localhost:8080/users?email=${email}&phoneNumber=${phoneNumber}`,
+            { method: 'POST' }
+        );
+        return await response.json();
+    };
+
+    const addReport = async (value, userId) => {
+        const response = await fetch(
+            `http://localhost:8080/units/${value}?userId=${userId}`,
+            { method: 'POST' }
+        );
+        if (response.status === 409) {
+            throw new Error('You have already reported this');
+        }
+        return await response.json();
+    };
+
+    // ── HANDLERS ───────────────────────────────────────
     const handleSignupInput = (e) => {
         setSignupData({ ...signupData, [e.target.name]: e.target.value });
     };
 
-    const handleSignupSubmit = (e) => {
+    const handleSignupSubmit = async (e) => {
         e.preventDefault();
-        setUserData(prev => ({
-            ...prev,
-            email: signupData.email,
-            phone: signupData.phone,
-            countryCode: signupData.countryCode
-        }));
-        setIsLoggedIn(true);
-        setView('profile');
+        try {
+            const user = await createUser(signupData.email, signupData.phone);
+            setUserData(prev => ({
+                ...prev,
+                id: user.id, // Store the ID from the database
+                email: user.email,
+                phone: user.phoneNumber,
+            }));
+            setIsLoggedIn(true);
+            setView('profile');
+        } catch (error) {
+            alert("Error connecting to server. Is the backend running?");
+        }
     };
 
     const handleLogin = (e) => {
@@ -50,6 +77,23 @@ function App() {
     const handleLogout = () => {
         setIsLoggedIn(false);
         setView('home');
+    };
+
+    const submitReport = async (e) => {
+        e.preventDefault();
+        const reportValue = e.target.elements[0].value;
+
+        try {
+            // Using the user ID stored in state
+            const report = await addReport(reportValue, userData.id);
+            e.target.reset();
+            alert("Report Submitted!");
+
+            // Note: If your API returns updated stats, update them here:
+            // setUserData(prev => ({ ...prev, reported: prev.reported + 1 }));
+        } catch (error) {
+            alert(error.message);
+        }
     };
 
     // ── SHARED COMPONENTS ──────────────────────────────
@@ -95,18 +139,6 @@ function App() {
         </footer>
     );
 
-    // Simplified Logic for submitting a report
-    const submitReport = (e) => {
-        e.preventDefault();
-
-        // In the future, you would put your database POST request here.
-        // For now, we just clear the form and show a simple confirmation.
-
-        e.target.reset(); // Clears the text from the input field
-        alert("Report Submitted!");
-    };
-
-    // ── VIEW: PROFILE (Updated Layout) ──────────────────────────────────
     if (view === 'profile') {
         return (
             <div className="app-wrapper">
@@ -119,14 +151,12 @@ function App() {
                     </section>
 
                     <div className="profile-grid">
-                        {/* Box 1: Total Score */}
                         <div className="card card-dark stat-card highlight-card">
                             <h3>Total Score</h3>
                             <div className="stat-number">{userData.points.toLocaleString()}</div>
                             <p className="stat-label">Your points</p>
                         </div>
 
-                        {/* Box 2: Reports & Warned */}
                         <div className="card card-dark stat-card">
                             <div className="mini-stats">
                                 <div className="mini-stat-item">
@@ -139,28 +169,18 @@ function App() {
                                     <span className="mini-stat-desc">Warned</span>
                                 </div>
                             </div>
-                            <p className="impact-text" style={{color: 'var(--dust-grey)', fontStyle: 'italic'}}>Your reports keep the community safe.</p>
+                            <p className="impact-text">Your reports keep the community safe.</p>
                         </div>
 
-                        {/* Box 3: SIMPLIFIED REPORTING TOOL (Stretches full width) */}
                         <div className="card card-dark stat-card report-action-card">
                             <h3 className="report-title">Report Threat</h3>
                             <p className="report-desc">Enter a suspicious URL, email, or phone number below.</p>
-
                             <form onSubmit={submitReport} className="mini-report-form">
-                                <input
-                                    type="text"
-                                    placeholder="Type the threat here..."
-                                    className="report-input"
-                                    required
-                                />
-                                <button type="submit" className="btn btn-primary btn-full">
-                                    Submit Report
-                                </button>
+                                <input type="text" placeholder="Type the threat here..." className="report-input" required />
+                                <button type="submit" className="btn btn-primary btn-full">Submit Report</button>
                             </form>
                         </div>
 
-                        {/* Box 4: Account Details */}
                         <div className="card card-video account-details">
                             <h3>Account Info</h3>
                             <div className="detail-row"><span>Email:</span> <strong>{userData.email}</strong></div>
@@ -174,7 +194,6 @@ function App() {
         );
     }
 
-    // SIGNUP & LOGIN VIEWS
     if (view === 'signup') {
         const passwordsMatch = signupData.pass1 === signupData.pass2;
         const phoneIsValid = /^\d{8}$/.test(signupData.phone);
@@ -183,11 +202,11 @@ function App() {
                 <Header />
                 <main className="auth-container">
                     <div className="card card-dark auth-card">
-                        <h2 className="auth-title">CREATE PROFILE HERE</h2>
+                        <h2 className="auth-title">CREATE PROFILE</h2>
                         <form className="auth-form" onSubmit={handleSignupSubmit}>
-                            <div className="input-group"><label>Your email:</label><input name="email" type="email" placeholder="name@example.com" onChange={handleSignupInput} required /></div>
+                            <div className="input-group"><label>Email:</label><input name="email" type="email" placeholder="name@example.com" onChange={handleSignupInput} required /></div>
                             <div className="input-group">
-                                <label>Your phone number:</label>
+                                <label>Phone Number:</label>
                                 <div className="phone-input-container">
                                     <select name="countryCode" className="country-select" value={signupData.countryCode} onChange={handleSignupInput}>
                                         <option value="+45">+45 (DK)</option><option value="+46">+46 (SE)</option><option value="+1">+1 (US)</option>
@@ -196,9 +215,9 @@ function App() {
                                 </div>
                                 {!phoneIsValid && signupData.phone.length > 0 && <span className="validation-error">Must be 8 digits</span>}
                             </div>
-                            <div className="input-group"><label>New password:</label><input name="pass1" type="password" placeholder="••••••••" onChange={handleSignupInput} required /></div>
+                            <div className="input-group"><label>New password:</label><input name="pass1" type="password" onChange={handleSignupInput} required /></div>
                             <div className="input-group">
-                                <label>Repeat password:</label><input name="pass2" type="password" placeholder="••••••••" onChange={handleSignupInput} required />
+                                <label>Repeat password:</label><input name="pass2" type="password" onChange={handleSignupInput} required />
                                 {!passwordsMatch && signupData.pass2.length > 0 && <span className="validation-error">Passwords do not match</span>}
                             </div>
                             <button className="btn btn-primary btn-full" disabled={!passwordsMatch || !phoneIsValid}>Create Profile</button>
@@ -223,7 +242,7 @@ function App() {
                             <div className="input-group"><label>Password:</label><input type="password" placeholder="••••••••" required /></div>
                             <button className="btn btn-primary btn-full">Sign In</button>
                         </form>
-                        <p className="auth-footer">Don't have an account? <span className="orange-text link-style" onClick={() => setView('signup')}>Create Profile</span></p>
+                        <p className="auth-footer">No account? <span className="orange-text link-style" onClick={() => setView('signup')}>Create Profile</span></p>
                     </div>
                 </main>
                 <Footer />
@@ -231,29 +250,27 @@ function App() {
         );
     }
 
-    // HOME VIEW
     return (
         <div className="app-wrapper">
             <Header />
             <main>
                 <section className="hero-section">
-                    <img src={logoIcon} width="128" height="128" alt="Block OFF Icon" className="hero-img" />
+                    <img src={logoIcon} width="128" height="128" alt="Icon" className="hero-img" />
                     <h1>Your shield against <span className="orange-text">Phishing</span></h1>
-                    <p className="tagline">Block OFF identifies scammers and warns you about sketchy links, emails, and messages — before it's too late.</p>
+                    <p className="tagline">Block OFF identifies scammers and warns you before it's too late.</p>
                     <div className="cta-row">
                         <a href="#" className="btn btn-primary">Web Extension</a>
-                        <a href="#" className="btn btn-outline">Download App (Soon)</a>
+                        {/* Make sure THIS line below does NOT have an onClick={() => setView('signup')} */}
+                        <a href="#" className="btn btn-outline">Download App</a>
                     </div>
                 </section>
                 <section className="cards-section">
-                    <div className="card card-dark">
-                        <h2>What is Phishing?</h2>
-                        <p>Phishing is a cybercrime where scammers impersonate legitimate institutions. Users help users feel safe on the internet.</p>
-                        <p className="card-highlight">Block OFF detects these threats in real time.</p>
+                    <div className="card card-dark"><h2>What is Phishing?</h2><p>Phishing is a cybercrime where scammers impersonate legitimate institutions to steal inforamtion or money.</p>
+                        <p>
+                            Join BlockOFF and help us make the internet a safer space for everyone.
+                        </p>
                     </div>
-                    <div className="card card-video">
-                        <div className="video-container"><video src={phishingVid} autoPlay loop muted playsInline className="phishing-video" /></div>
-                    </div>
+                    <div className="card card-video"><div className="video-container"><video src={phishingVid} autoPlay loop muted playsInline className="phishing-video" /></div></div>
                 </section>
             </main>
             <Footer />
