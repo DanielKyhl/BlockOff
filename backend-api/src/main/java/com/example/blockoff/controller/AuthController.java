@@ -8,10 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = {
-        "http://localhost:5173",
-        "chrome-extension://lkpnjncioceiadifnbmeaioognfcgboc"
-})
+@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:8080",
+                        "chrome-extension://lkpnjncioceiadifnbmeaioognfcgboc"})
 public class AuthController {
 
     @Autowired
