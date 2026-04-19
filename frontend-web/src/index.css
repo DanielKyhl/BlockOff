@@ -549,14 +549,38 @@ h1 { font-size: clamp(2.4rem, 5vw, 3.6rem); letter-spacing: -2px; line-height: 1
     gap: 15px;
 }
 
-/* ── FIX FOR CANCEL/GO BACK BUTTON TEXT ── */
-.mini-report-form .btn-outline {
-    color: #ffffff !important; /* Forces the 'Cancel' text to be white */
-    border: 1px solid var(--dust-grey);
-    background: transparent;
+/* Ensure the report card stays full width */
+@media (min-width: 900px) {
+    .report-action-card, .account-details {
+        grid-column: span 2;
+    }
 }
 
-.mini-report-form .btn-outline:hover {
-    color: var(--accent) !important; /* Turns orange on hover */
-    border-color: var(--accent);
+.report-action-card {
+    text-align: center;
+    padding: 40px;
+}
+
+.report-title { color: #fff !important; margin-bottom: 5px; }
+.report-desc { color: var(--dust-grey) !important; margin-bottom: 25px; }
+
+.mini-report-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.report-input {
+    width: 100%;
+    background: #151413;
+    border: 2px solid var(--charcoal-brown);
+    color: white;
+    padding: 16px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.report-action-card .btn-primary {
+    width: 100%;
+    padding: 14px;
+    font-weight: 700;
 }
