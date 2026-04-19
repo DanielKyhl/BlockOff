@@ -64,6 +64,7 @@ function App() {
             setView('profile');
         } catch (error) {
             alert("Error connecting to server. Is the backend running?");
+            console.error(error);
         }
     };
 

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/domains")
-@CrossOrigin(origins = "http://localhost:3000") // Allows React to connect
+@CrossOrigin(origins = "http://localhost:5173") // Allows React to connect
 public class DomainController {
 
     private final DomainService domainService;
