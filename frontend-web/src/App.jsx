@@ -8,7 +8,7 @@ function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [reportingType, setReportingType] = useState(null)
 
-    // Central User State - Added 'id' to track database user
+    // filler data
     const [userData, setUserData] = useState({
         id: null,
         email: 'Guest',
@@ -24,7 +24,7 @@ function App() {
         email: '', countryCode: '+45', phone: '', pass1: '', pass2: ''
     });
 
-    // ── API UTILITIES ──────────────────────────────────
+    // API calls
     const createUser = async (email, phoneNumber) => {
         const response = await fetch(
             `http://localhost:8080/users?email=${email}&phoneNumber=${phoneNumber}`,
@@ -44,7 +44,7 @@ function App() {
         return await response.json();
     };
 
-    // ── HANDLERS ───────────────────────────────────────
+    // Handlers
     const handleSignupInput = (e) => {
         setSignupData({ ...signupData, [e.target.name]: e.target.value });
     };
@@ -61,6 +61,7 @@ function App() {
             }));
             setIsLoggedIn(true);
             setView('profile');
+            // eslint-disable-next-line no-unused-vars
         } catch (error) {
             alert("Error connecting to server. Is the backend running?");
         }
@@ -89,14 +90,11 @@ function App() {
             e.target.reset();
             alert("Report Submitted!");
 
-            // Note: If your API returns updated stats, update them here:
-            // setUserData(prev => ({ ...prev, reported: prev.reported + 1 }));
         } catch (error) {
             alert(error.message);
         }
     };
 
-    // ── SHARED COMPONENTS ──────────────────────────────
     const Header = () => (
         <header className="site-header">
             <div className="header-left">
