@@ -60,6 +60,3 @@ bun run dev
 
 ---
 
-## Contact
-
-📧 [Blockoffservice@gmail.com](mailto:Blockoffservice@gmail.com)
